@@ -1,0 +1,82 @@
+/* يمكنك وضعه في ملف منفصل أو داخل <style> في index.html */
+
+/* الأنماط الأساسية */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  color: #1f2937;
+  direction: rtl;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Responsive */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  .md\:grid-cols-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .md\:grid-cols-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .md\:grid-cols-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+  
+  .lg\:grid-cols-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .lg\:grid-cols-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
