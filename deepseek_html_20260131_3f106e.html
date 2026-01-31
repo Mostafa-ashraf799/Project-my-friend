@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keeping Distances - تطبيق الدردشة الآمن</title>
+    <meta name="description" content="تطبيق دردشة آمن مع تشفير من النهاية إلى النهاية وحماية كاملة للخصوصية" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <style>
+        /* CSS كامل للتطبيق */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #ffffff;
+            color: #1f2937;
+            direction: rtl;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+
+        /* Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            color: #1e3a8a;
+            margin: 0;
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: #1e3a8a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e3a8a;
+            border: 1px solid #1e3a8a;
+        }
+
+        .btn-outline:hover {
+            background: #eff6ff;
+        }
+
+        .btn-lg {
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(to bottom, #eff6ff, white);
+            padding: 5rem 0;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e3a8a;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            color: #1e3a8a;
+            line-height: 1.25;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: #4b5563;
+            margin-bottom: 2rem;
+        }
+
+        /* Stats */
+        .stats {
+            background: linear-gradient(to right, #1e3a8a, #1e40af);
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #93c5fd;
+            font-size: 0.875rem;
+        }
+
+        /* Features */
+        .features {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.25rem;
+            color: #1e3a8a;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: #4b5563;
+            max-width: 42rem;
+            margin: 0 auto 3rem;
+        }
+
+        .feature-card {
+            background: linear-gradient(to bottom right, #eff6ff, white);
+            border: 1px solid #dbeafe;
+            border-radius: 1rem;
+            padding: 2rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            color: #1e3a8a;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-desc {
+            color: #4b5563;
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1e3a8a;
+            color: white;
+            padding: 3rem 0;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-icon {
+            width: 2rem;
+            height: 2rem;
+            background: white;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3a8a;
+        }
+
+        .footer-copyright {
+            text-align: center;
+            color: #93c5fd;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: #93c5fd;
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        .footer-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Grid System */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: 1fr;
+        }
+
+        @media (min-width: 768px) {
+            .grid-cols-2 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .grid-cols-4 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid-cols-3 {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Contact Info */
+        .contact-info {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-icon {
+            color: #1e3a8a;
+            font-size: 1.25rem;
+        }
+
+        .contact-text {
+            color: #374151;
+            font-weight: 600;
+        }
+
+        .contact-link {
+            color: #1e3a8a;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .contact-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Utilities */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mt-4 { margin-top: 1rem; }
+        .mt-8 { margin-top: 2rem; }
+
+        .flex {
+            display: flex;
+        }
+
+        .items-center {
+            align-items: center;
+        }
+
+        .justify-center {
+            justify-content: center;
+        }
+
+        .justify-between {
+            justify-content: space-between;
+        }
+
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-8 { gap: 2rem; }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .md-flex {
+                display: flex;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a8a;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header>
+        <div class="container">
+            <div class="nav-container">
+                <div class="logo">
+                    <div class="logo-icon">🔒</div>
+                    <div class="logo-text">
+                        <h1>Keeping Distances</h1>
+                        <p>تطبيق الدردشة الآمن</p>
+                    </div>
+                </div>
+                <nav class="hidden md-flex gap-8 items-center">
+                    <a href="#features" class="text-gray-700 hover:text-blue-700" style="text-decoration: none;">الميزات</a>
+                    <a href="#privacy" class="text-gray-700 hover:text-blue-700" style="text-decoration: none;">الخصوصية</a>
+                    <a href="#support" class="text-gray-700 hover:text-blue-700" style="text-decoration: none;">الدعم</a>
+                    <a href="#download" class="btn btn-primary">تحميل التطبيق</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="hero-badge">🔒 التطبيق الأول في الأمان</div>
+                    <h1 class="hero-title">تطبيق الدردشة الآمن</h1>
+                    <p class="hero-description">
+                        اتصل بأمان وخصوصية تامة. حماية بيانات متقدمة مع تشفير من النهاية إلى النهاية. 
+                        الخيار الأول لملايين المستخدمين حول العالم.
+                    </p>
+                    
+                    <div class="flex gap-4 mt-8 flex-wrap">
+                        <a href="#download" class="btn btn-primary btn-lg">
+                            <span>⬇️</span> تحميل الآن
+                        </a>
+                        <a href="#features" class="btn btn-outline btn-lg">
+                            اعرف المزيد <span style="margin-right: 0.5rem;">→</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <span class="contact-text">01070028368</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="contact-icon">📧</span>
+                            <a href="mailto:mohamed93308997@gmail.com" class="contact-link">البريد الفني</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Hero Image Placeholder -->
+                <div style="text-align: center;">
+                    <div style="
+                        width: 100%;
+                        height: 300px;
+                        background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+                        border-radius: 1rem;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: white;
+                        font-size: 1.5rem;
+                    ">
+                        🔒 أمان تام في كل رسالة
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="stat-item">
+                    <div class="stat-value">100K+</div>
+                    <div class="stat-label">مستخدم نشط</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50+</div>
+                    <div class="stat-label">دول مدعومة</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">10M+</div>
+                    <div class="stat-label">رسائل آمنة يومياً</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">&lt;1ms</div>
+                    <div class="stat-label">وقت التشفير</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">الميزات الرئيسية</h2>
+            <p class="section-subtitle">
+                اكتشف كيف يوفر Keeping Distances أفضل تجربة دردشة آمنة مع ميزات متقدمة لا تجدها في أي تطبيق آخر
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card" onclick="toggleFeature(1)">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div class="feature-icon" style="background: #1e3a8a;">🔒</div>
+                        <span id="arrow-1">▼</span>
+                    </div>
+                    <h3 class="feature-title">التشفير الكامل</h3>
+                    <p id="desc-1" class="feature-desc">تشفير من النهاية إلى النهاية</p>
+                    <div id="full-desc-1" style="display: none; margin-top: 1rem;">
+                        <p class="feature-desc">تشفير من النهاية إلى النهاية (E2E) لجميع المحادثات. لا أحد يمكنه قراءة رسائلك سوى المستقبل. نستخدم تقنية AES-256 الأعلى في العالم لضمان حماية بياناتك.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card" onclick="toggleFeature(2)">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div class="feature-icon" style="background: #059669;">👁️</div>
+                        <span id="arrow-2">▼</span>
+                    </div>
+                    <h3 class="feature-title">الخصوصية الكاملة</h3>
+                    <p id="desc-2" class="feature-desc">رقم هاتفك محمي تماماً</p>
+                    <div id="full-desc-2" style="display: none; margin-top: 1rem;">
+                        <p class="feature-desc">رقم هاتفك محمي. لن يظهر لأي شخص إلا إذا اخترت مراسلته مباشرة. حتى المشرفين لا يمكنهم رؤية أرقام الهاتف. تحكم كامل في من يرى معلوماتك الشخصية.</p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card" onclick="toggleFeature(3)">
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div class="feature-icon" style="background: #0891b2;">💬</div>
+                        <span id="arrow-3">▼</span>
+                    </div>
+                    <h3 class="feature-title">محتوى متنوع</h3>
+                    <p id="desc-3" class="feature-desc">أرسل أي شيء بأمان</p>
+                    <div id="full-desc-3" style="display: none; margin-top: 1rem;">
+                        <p class="feature-desc">أرسل نصوص وصور وفيديوهات وملفات صوتية بجودة عالية بأمان تام. دعم كامل للملفات بأنواعها. كل المحتوى مشفر ومحمي من الوصول غير المصرح.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="download" style="background: linear-gradient(to right, #1e3a8a, #1e40af); color: white; padding: 5rem 0;">
+        <div class="container text-center">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">جاهز للبدء؟</h2>
+            <p style="font-size: 1.25rem; color: #93c5fd; margin-bottom: 2rem; max-width: 42rem; margin-left: auto; margin-right: auto;">
+                انضم إلى ملايين المستخدمين الذين يثقون بـ Keeping Distances لحماية خصوصيتهم والتواصل بأمان تام
+            </p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <a href="#" class="btn btn-lg" style="background: white; color: #1e3a8a;">
+                    <span>⬇️</span> تحميل التطبيق الآن
+                </a>
+                <a href="#features" class="btn btn-outline btn-lg" style="border-color: white; color: white;">
+                    اعرف المزيد <span style="margin-right: 0.5rem;">→</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <div class="footer-icon">🔒</div>
+                <div>
+                    <h3 style="margin: 0;">Keeping Distances</h3>
+                    <p style="font-size: 0.75rem; color: #93c5fd; margin: 0;">تطبيق الدردشة الآمن</p>
+                </div>
+            </div>
+            
+            <p class="footer-copyright">© 2026 Keeping Distances. جميع الحقوق محفوظة.</p>
+            
+            <div class="footer-links">
+                <a href="#features" class="footer-link">الميزات</a>
+                <a href="#privacy" class="footer-link">الخصوصية</a>
+                <a href="#support" class="footer-link">الدعم</a>
+                <a href="mailto:mohamed93308997@gmail.com" class="footer-link">البريد الفني</a>
+                <a href="tel:01070028368" class="footer-link">01070028368</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript للتفعيل -->
+    <script>
+        // تفعيل الميزات القابلة للطي
+        function toggleFeature(featureId) {
+            const desc = document.getElementById(`desc-${featureId}`);
+            const fullDesc = document.getElementById(`full-desc-${featureId}`);
+            const arrow = document.getElementById(`arrow-${featureId}`);
+            
+            if (fullDesc.style.display === 'block') {
+                fullDesc.style.display = 'none';
+                arrow.style.transform = 'rotate(0deg)';
+                desc.style.display = 'block';
+            } else {
+                fullDesc.style.display = 'block';
+                arrow.style.transform = 'rotate(180deg)';
+                desc.style.display = 'none';
+            }
+        }
+
+        // تحسين التنقل السلس
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // إظهار رسالة ترحيب
+        window.addEventListener('load', function() {
+            console.log('Keeping Distances - تطبيق الدردشة الآمن - تم التحميل بنجاح');
+        });
+    </script>
+</body>
+</html>
